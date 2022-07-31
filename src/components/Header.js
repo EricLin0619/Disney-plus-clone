@@ -31,6 +31,7 @@ function Header() {
             <span>SERIES</span>
         </a>
       </NavMenu>
+      <Wrap>Eric</Wrap>
       <UserImg src="\images\240723121_4301681869915827_5728591322097657989_n.jpg"></UserImg>
     </Nav>
     
@@ -47,6 +48,7 @@ const Nav = styled.nav`
     padding : 0 36px;
 `
 const Logo = styled.img`
+    cursor : pointer;
     width : 80px;
 `
 const NavMenu = styled.div`
@@ -65,7 +67,7 @@ const NavMenu = styled.div`
         }
 
         span{
-            font_size : 13px;
+            font-size : 13px;
             letter-spacing : 1.42px;
             position : relative;
 
@@ -97,4 +99,13 @@ const UserImg = styled.img`
     height : 48px;
     border-radius : 50%;
     cursor : pointer;
+
+    &:before{
+        content: "Eric";
+        color: white;
+    }
+`
+
+const Wrap = styled.div`
+    margin-right: 20px;
 `
