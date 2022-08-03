@@ -42,10 +42,16 @@ export default Header
 
 const Nav = styled.nav`
     height : 70px;
+    width:100%;
     background : #090b13;
     display : flex;
     align-items : center;
     padding : 0 36px;
+    position: fixed;
+    top:0;
+    z-index: 1;
+    background : url("./images/home-background.png")  center center / cover
+    no-repeat fixed;
 `
 const Logo = styled.img`
     cursor : pointer;
@@ -107,5 +113,5 @@ const UserImg = styled.img`
 `
 
 const Wrap = styled.div`
-    margin-right: 20px;
+    margin-right: 12px;
 `
