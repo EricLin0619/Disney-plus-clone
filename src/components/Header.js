@@ -1,7 +1,17 @@
 import React from 'react'
 import styled  from 'styled-components'
+import {auth,provider} from "../firebase"
 
 function Header() {
+
+  const handleAuth = ()=>{
+    auth.signInWithPopup(provider).then((result)=>{
+        console.log(result);
+    }).catch(err=>{
+        alert(err.message);
+    })
+  }
+
   return (
     <Nav>
       <Logo src="/images/logo.svg"/>
@@ -31,8 +41,9 @@ function Header() {
             <span>SERIES</span>
         </a>
       </NavMenu>
-      <Wrap>Eric</Wrap>
-      <UserImg src="\images\240723121_4301681869915827_5728591322097657989_n.jpg"></UserImg>
+      {/* <Wrap>Eric</Wrap>
+      <UserImg src="\images\240723121_4301681869915827_5728591322097657989_n.jpg"></UserImg> */}
+      <Login onClick={handleAuth}>Login</Login>
     </Nav>
     
   )
@@ -49,7 +60,7 @@ const Nav = styled.nav`
     padding : 0 36px;
     position: fixed;
     top:0;
-    z-index: 1;
+    z-index: 3;
     background : url("./images/home-background.png")  center center / cover
     no-repeat fixed;
 `
@@ -59,9 +70,14 @@ const Logo = styled.img`
 `
 const NavMenu = styled.div`
     display : flex;
-    flex : 1;
+    /* flex : 1; */
     margin-left : 25px;
     align-items : center;
+
+    @media (max-width: 1000px) {
+        display: none;
+    }
+
     a{
         display : flex;
         align-items : center; 
@@ -105,6 +121,8 @@ const UserImg = styled.img`
     height : 48px;
     border-radius : 50%;
     cursor : pointer;
+    position: fixed;
+    right: 20px;
 
     &:before{
         content: "Eric";
@@ -113,5 +131,24 @@ const UserImg = styled.img`
 `
 
 const Wrap = styled.div`
-    margin-right: 12px;
+    position: fixed;
+    right: 80px;
+    z-index: 1;
+`
+const Login = styled.a`
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 8px 16px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  border: 1px solid #f9f9f9;
+  border-radius: 4px;
+  transition: all 0.2s ease 0s;
+  position: fixed;
+  right: 35px;
+  &:hover {
+    background-color: #f9f9f9;
+    color: #000;
+    border-color: transparent;
+    cursor: pointer;
+  }
 `

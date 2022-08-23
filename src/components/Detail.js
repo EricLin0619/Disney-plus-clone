@@ -44,10 +44,10 @@ const Container = styled.div`
 const Background = styled.div`
     z-index: -1;
     position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
+    top:70px;
+    right: 0px;
+    left:0px;
+    bottom:0px;
     img{
         height: 100%;
         width: 100%;
