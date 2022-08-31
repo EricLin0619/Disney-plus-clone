@@ -16,10 +16,10 @@ function Header(props) {
     auth.onAuthStateChanged(async(user)=>{
         if(user){
             setUser(user)
-            navigate("/")
+            navigate("/home")
         }
         else{
-            // navigate("/login")
+            navigate("/")
         }
     })
   },[userName])  
@@ -35,7 +35,7 @@ function Header(props) {
     else{
         auth.signOut().then(()=>{
             dispatch(setSignOutState())
-            navigate("/login")
+            navigate("/")
         }).catch(err=>{console.log(err.message)})
     }
   }
@@ -52,14 +52,14 @@ function Header(props) {
 
   return (
     <Nav>
-        <Link to={"/"}>
+        <Link to={"/home"}>
             <Logo src="/images/logo.svg" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})} />
         </Link>
       {userName==null ? (<Login onClick={handleAuth}>Login</Login>) : 
       (
       <>
         <NavMenu>
-        <a href='/'>
+        <a href='/home'>
                 <img src="images\home-icon.svg"/>
                 <span>HOME</span>
         </a>
