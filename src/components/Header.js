@@ -2,7 +2,7 @@ import React ,{useEffect} from 'react'
 import styled  from 'styled-components'
 import { useDispatch,useSelector } from "react-redux"
 import {auth,provider} from "../firebase"
-import {useNavigate} from "react-router-dom"
+import {useNavigate,Link} from "react-router-dom"
 import {selectUserEmail,selectUserName,selectUserPhoto, setSignOutState, setUserLoginDetails} from "../features/user/userSlice"
 
 function Header(props) {
@@ -17,6 +17,9 @@ function Header(props) {
         if(user){
             setUser(user)
             navigate("/")
+        }
+        else{
+            // navigate("/login")
         }
     })
   },[userName])  
@@ -49,14 +52,16 @@ function Header(props) {
 
   return (
     <Nav>
-      <Logo src="/images/logo.svg"/>
+        <Link to={"/"}>
+            <Logo src="/images/logo.svg" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})} />
+        </Link>
       {userName==null ? (<Login onClick={handleAuth}>Login</Login>) : 
       (
       <>
         <NavMenu>
-        <a>
-            <img src="images\home-icon.svg"/>
-            <span>HOME</span>
+        <a href='/'>
+                <img src="images\home-icon.svg"/>
+                <span>HOME</span>
         </a>
         <a>
             <img src="images\search-icon.svg"/>
@@ -97,6 +102,7 @@ function Header(props) {
 
 export default Header
 
+
 const Nav = styled.nav`
     height : 70px;
     width:100%;
@@ -129,7 +135,7 @@ const NavMenu = styled.div`
         align-items : center; 
         padding : 0 20px;
         cursor : pointer;
-        
+        text-decoration: none;        
         img{
             height : 25px;
         }
@@ -137,6 +143,7 @@ const NavMenu = styled.div`
         span{
             font-size : 13px;
             letter-spacing : 1.42px;
+            color: white;
             position : relative;
 
             &:after{

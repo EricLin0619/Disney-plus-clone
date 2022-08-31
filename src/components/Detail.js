@@ -1,14 +1,34 @@
-import React from 'react'
+import React , {useEffect,useState} from 'react'
+import { useParams } from 'react-router-dom'
+import db from "../firebase"
 import styled from 'styled-components'
 
 function Detail() {
+  const {id} = useParams()
+  const [detailData , setDetailData] = useState({});
+  
+  useEffect(()=>{
+    db.collection("movies").doc(id).get()
+    .then((doc)=>{
+        if(doc.exists){
+            setDetailData(doc.data())
+        }
+        else{
+            console.log("no such file exist.");
+        }
+    })
+    .catch((err)=>{
+        console.log(err.message);
+    })
+  },[id])
+  
   return (
     <Container>
       <Background>
-        <img src='https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/4F39B7E16726ECF419DD7C49E011DD95099AA20A962B0B10AA1881A70661CE45/scale?width=1440&aspectRatio=1.78&format=jpeg'></img>
+        <img src={detailData.backgroundImg} alt={detailData.title}></img>
       </Background>
       <ImageTitle>
-        <img src='https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/D7AEE1F05D10FC37C873176AAA26F777FC1B71E7A6563F36C6B1B497CAB1CEC2/scale?width=1440&aspectRatio=1.78'></img>
+        <img src={detailData.titleImg} alt={detailData.title}></img>
       </ImageTitle>
       <Controls>
         <PlayButton>
@@ -27,10 +47,10 @@ function Detail() {
         </GroupButton>
       </Controls>
       <Subtitle>
-        喜劇、動畫
+        {detailData.subTitle}
       </Subtitle>
       <Description>
-        包子動畫
+        {detailData.description}
       </Description>
     </Container>
   )
@@ -48,6 +68,7 @@ const Background = styled.div`
     right: 0px;
     left:0px;
     bottom:0px;
+    opacity: 0.9;
     img{
         height: 100%;
         width: 100%;
@@ -134,7 +155,11 @@ const Subtitle = styled.div`
 `
 
 const Description = styled.div`
+    max-width:700px;
     margin-left:6vw;
     margin-top: 16px;
     font-size: 18px;
+    @media (max-width:800px){
+
+    }
 `
