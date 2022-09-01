@@ -3,6 +3,7 @@ import styled  from 'styled-components'
 import { useDispatch,useSelector } from "react-redux"
 import {auth,provider} from "../firebase"
 import {useNavigate,Link} from "react-router-dom"
+import {isMobile} from "react-device-detect"
 import {selectUserEmail,selectUserName,selectUserPhoto, setSignOutState, setUserLoginDetails} from "../features/user/userSlice"
 
 function Header(props) {
@@ -25,19 +26,39 @@ function Header(props) {
   },[userName])  
 
   const handleAuth = ()=>{
-    if(userName==null){
-        auth.signInWithPopup(provider).then((result)=>{
-            // setUser(result.user)
-        }).catch(err=>{
-            alert(err.message);
-        })
+
+    if(isMobile){
+        if(userName==null){
+            auth.signInWithRedirect(provider).then((result)=>{
+                setUser(result.user)
+            }).catch(err=>{
+                alert(err.message);
+            })
+        }
+        else{
+            auth.signOut().then(()=>{
+                dispatch(setSignOutState())
+                navigate("/")
+            }).catch(err=>{console.log(err.message)})
+        }
     }
     else{
-        auth.signOut().then(()=>{
-            dispatch(setSignOutState())
-            navigate("/")
-        }).catch(err=>{console.log(err.message)})
+        if(userName==null){
+            auth.signInWithPopup(provider).then((result)=>{
+                setUser(result.user)
+            }).catch(err=>{
+                alert(err.message);
+            })
+        }
+        else{
+            auth.signOut().then(()=>{
+                dispatch(setSignOutState())
+                navigate("/")
+            }).catch(err=>{console.log(err.message)})
+        }
     }
+
+    
   }
 
   const setUser = (user)=>{
